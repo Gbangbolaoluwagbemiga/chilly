@@ -35,7 +35,9 @@ export function OrderStatusUpdate({
   disabled = false,
 }: OrderStatusUpdateProps) {
   const [isUpdating, setIsUpdating] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(order.status);
+  const [selectedStatus, setSelectedStatus] = useState<OrderStatus>(
+    order.status
+  );
 
   const handleUpdate = async () => {
     if (selectedStatus === order.status) return;
@@ -95,4 +97,3 @@ export function OrderStatusUpdate({
     </div>
   );
 }
-

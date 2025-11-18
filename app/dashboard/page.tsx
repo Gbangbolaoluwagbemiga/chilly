@@ -113,7 +113,11 @@ export default function DashboardPage() {
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
         order.id === orderId
-          ? { ...order, status: newStatus, updatedAt: Math.floor(Date.now() / 1000) }
+          ? {
+              ...order,
+              status: newStatus,
+              updatedAt: Math.floor(Date.now() / 1000),
+            }
           : order
       )
     );

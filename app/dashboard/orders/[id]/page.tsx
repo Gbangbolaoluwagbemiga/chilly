@@ -99,7 +99,8 @@ export default function OrderDetailPage() {
   const statusColors: Record<string, string> = {
     pending:
       "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
-    confirmed: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+    confirmed:
+      "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
     processing:
       "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
     shipped:
@@ -136,7 +137,9 @@ export default function OrderDetailPage() {
                 </p>
               </div>
               <span
-                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${statusColors[order.status]}`}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
+                  statusColors[order.status]
+                }`}
               >
                 <span className="capitalize">{order.status}</span>
               </span>
@@ -200,7 +203,9 @@ export default function OrderDetailPage() {
                           {formatAddress(order.transactionHash)}
                         </code>
                         <button
-                          onClick={() => copyToClipboard(order.transactionHash!)}
+                          onClick={() =>
+                            copyToClipboard(order.transactionHash!)
+                          }
                           className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50"
                         >
                           📋
@@ -352,7 +357,9 @@ export default function OrderDetailPage() {
                 <div className="space-y-2">
                   <button
                     onClick={() => {
-                      const url = `https://${order.network === "mainnet" ? "" : order.network + "."}etherscan.io/tx/${order.transactionHash}`;
+                      const url = `https://${
+                        order.network === "mainnet" ? "" : order.network + "."
+                      }etherscan.io/tx/${order.transactionHash}`;
                       window.open(url, "_blank");
                     }}
                     disabled={!order.transactionHash}
@@ -363,7 +370,9 @@ export default function OrderDetailPage() {
                   <button
                     onClick={() => {
                       const data = JSON.stringify(order, null, 2);
-                      const blob = new Blob([data], { type: "application/json" });
+                      const blob = new Blob([data], {
+                        type: "application/json",
+                      });
                       const url = URL.createObjectURL(blob);
                       const a = document.createElement("a");
                       a.href = url;
@@ -384,4 +393,3 @@ export default function OrderDetailPage() {
     </div>
   );
 }
-

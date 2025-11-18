@@ -116,26 +116,33 @@ export default function AnalyticsPage() {
                 Orders by Status
               </h2>
               <div className="space-y-3">
-                {Object.entries(analytics.statusCounts).map(([status, count]) => (
-                  <div key={status} className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50 capitalize">
-                      {status}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-32 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-orange-600"
-                          style={{
-                            width: `${(count / analytics.totalOrders) * 100}%`,
-                          }}
-                        ></div>
-                      </div>
-                      <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 w-8 text-right">
-                        {count}
+                {Object.entries(analytics.statusCounts).map(
+                  ([status, count]) => (
+                    <div
+                      key={status}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50 capitalize">
+                        {status}
                       </span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-32 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-orange-600"
+                            style={{
+                              width: `${
+                                (count / analytics.totalOrders) * 100
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 w-8 text-right">
+                          {count}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
 
@@ -145,26 +152,33 @@ export default function AnalyticsPage() {
                 Orders by Network
               </h2>
               <div className="space-y-3">
-                {Object.entries(analytics.networkCounts).map(([network, count]) => (
-                  <div key={network} className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50 capitalize">
-                      {network}
-                    </span>
-                    <div className="flex items-center gap-3">
-                      <div className="w-32 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-indigo-600"
-                          style={{
-                            width: `${(count / analytics.totalOrders) * 100}%`,
-                          }}
-                        ></div>
-                      </div>
-                      <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 w-8 text-right">
-                        {count}
+                {Object.entries(analytics.networkCounts).map(
+                  ([network, count]) => (
+                    <div
+                      key={network}
+                      className="flex items-center justify-between"
+                    >
+                      <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50 capitalize">
+                        {network}
                       </span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-32 h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-indigo-600"
+                            style={{
+                              width: `${
+                                (count / analytics.totalOrders) * 100
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 w-8 text-right">
+                          {count}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
 
@@ -177,7 +191,10 @@ export default function AnalyticsPage() {
                 {Object.entries(analytics.monthlyOrders)
                   .sort()
                   .map(([month, count]) => (
-                    <div key={month} className="flex items-center justify-between">
+                    <div
+                      key={month}
+                      className="flex items-center justify-between"
+                    >
                       <span className="text-sm font-medium text-zinc-900 dark:text-zinc-50">
                         {month}
                       </span>
@@ -188,7 +205,9 @@ export default function AnalyticsPage() {
                             style={{
                               width: `${
                                 (count /
-                                  Math.max(...Object.values(analytics.monthlyOrders))) *
+                                  Math.max(
+                                    ...Object.values(analytics.monthlyOrders)
+                                  )) *
                                 100
                               }%`,
                             }}
@@ -209,4 +228,3 @@ export default function AnalyticsPage() {
     </div>
   );
 }
-
