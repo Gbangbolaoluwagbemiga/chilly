@@ -11,6 +11,7 @@ import { OrderList } from "@/components/dashboard/OrderList";
 import { CreateOrderModal } from "@/components/dashboard/CreateOrderModal";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { exportOrdersToJSON, exportOrdersToCSV } from "@/lib/exportUtils";
 
 export default function DashboardPage() {
   const { isConnected, address } = useAccount();
@@ -105,11 +106,22 @@ export default function DashboardPage() {
     };
 
     setOrders([newOrder, ...orders]);
+    alert("Order created successfully!");
+  };
+
+  const handleStatusUpdate = (orderId: string, newStatus: OrderStatus) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId
+          ? { ...order, status: newStatus, updatedAt: Math.floor(Date.now() / 1000) }
+          : order
+      )
+    );
+    alert("Order status updated successfully!");
   };
 
   const handleOrderClick = (order: Order) => {
-    // Navigate to order detail page (to be implemented)
-    console.log("Order clicked:", order);
+    router.push(`/dashboard/orders/${order.id}`);
   };
 
   if (!isConnected) {
@@ -142,12 +154,20 @@ export default function DashboardPage() {
                 Manage and track all your blockchain orders
               </p>
             </div>
-            <button
-              onClick={() => setIsCreateModalOpen(true)}
-              className="mt-4 sm:mt-0 px-6 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 transition-colors"
-            >
-              + Create Order
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
+              <a
+                href="/analytics"
+                className="px-6 py-3 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-50 font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors text-center"
+              >
+                📊 Analytics
+              </a>
+              <button
+                onClick={() => setIsCreateModalOpen(true)}
+                className="px-6 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 transition-colors"
+              >
+                + Create Order
+              </button>
+            </div>
           </div>
 
           {/* Stats */}
@@ -165,10 +185,26 @@ export default function DashboardPage() {
 
           {/* Order List */}
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
               <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
                 Orders ({filteredOrders.length})
               </h2>
+              {filteredOrders.length > 0 && (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => exportOrdersToJSON(filteredOrders)}
+                    className="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-50 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  >
+                    Export JSON
+                  </button>
+                  <button
+                    onClick={() => exportOrdersToCSV(filteredOrders)}
+                    className="px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-50 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                  >
+                    Export CSV
+                  </button>
+                </div>
+              )}
             </div>
             <OrderList
               orders={filteredOrders}

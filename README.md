@@ -15,7 +15,11 @@
 - 🌐 **Multi-chain Support** - Works across Ethereum Mainnet, Sepolia, Polygon, and Arbitrum networks
 - 🎨 **Modern UI** - Beautiful, responsive interface built with Tailwind CSS and dark mode support
 - 🔍 **Advanced Filtering** - Filter orders by status, network, and search across all fields
-- 📈 **Order Analytics** - View statistics including total orders, status breakdown, and total value
+- 📈 **Order Analytics** - Comprehensive analytics dashboard with charts and insights
+- 📄 **Order Details** - Detailed view for each order with blockchain information
+- 🔄 **Status Updates** - Update order status with real-time changes
+- 📤 **Data Export** - Export orders to JSON or CSV format
+- 🔗 **Block Explorer Integration** - Direct links to view transactions on Etherscan
 
 ## 🚀 Getting Started
 
@@ -125,8 +129,12 @@ Optional:
 ```
 chilly/
 ├── app/                        # Next.js App Router pages
-│   ├── dashboard/              # Dashboard page
+│   ├── dashboard/              # Dashboard pages
+│   │   ├── orders/            # Order detail pages
+│   │   │   └── [id]/          # Dynamic order detail route
 │   │   └── page.tsx           # Dashboard with order management
+│   ├── analytics/              # Analytics page
+│   │   └── page.tsx           # Analytics dashboard
 │   ├── layout.tsx             # Root layout with Web3 provider
 │   ├── page.tsx               # Home/landing page
 │   └── globals.css            # Global styles
@@ -136,6 +144,7 @@ chilly/
 │   │   ├── OrderList.tsx      # List of orders with loading states
 │   │   ├── OrderFilters.tsx   # Filtering and search components
 │   │   ├── OrderStats.tsx     # Statistics display component
+│   │   ├── OrderStatusUpdate.tsx # Status update component
 │   │   └── CreateOrderModal.tsx # Modal for creating new orders
 │   ├── Header.tsx             # Navigation header
 │   ├── Hero.tsx               # Hero section
@@ -147,7 +156,8 @@ chilly/
 │   ├── types.ts               # TypeScript type definitions
 │   ├── web3.ts                # Web3 configuration (wagmi, Reown)
 │   ├── Web3Provider.tsx       # Web3 context provider
-│   └── mockData.ts            # Mock data for development
+│   ├── mockData.ts            # Mock data for development
+│   └── exportUtils.ts         # Export utilities (JSON, CSV)
 ├── public/                     # Static assets
 └── contracts/                  # Smart contracts (to be implemented)
 ```
