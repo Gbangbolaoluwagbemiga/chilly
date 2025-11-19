@@ -20,6 +20,9 @@
 - 🔄 **Status Updates** - Update order status with real-time changes
 - 📤 **Data Export** - Export orders to JSON or CSV format
 - 🔗 **Block Explorer Integration** - Direct links to view transactions on Etherscan
+- ⛓️ **Smart Contract Integration** - Fully functional Solidity contract for on-chain order management
+- 💰 **Escrow System** - Secure payment handling with automatic release on delivery
+- 🔐 **Dispute Resolution** - Built-in dispute mechanism for order conflicts
 
 ## 🚀 Getting Started
 
@@ -102,25 +105,31 @@ The dashboard is the main interface for managing orders:
 
 ### Environment Variables
 
-Required:
+**Frontend (.env.local):**
+- `NEXT_PUBLIC_PROJECT_ID` - Your Reown AppKit Project ID from [cloud.reown.com](https://cloud.reown.com) (Required)
+- `NEXT_PUBLIC_CHAIN_ID` - Default chain ID (Optional, default: 1 for Ethereum Mainnet)
+- `NEXT_PUBLIC_RPC_URL` - Custom RPC URL for blockchain interactions (Optional)
 
-- `NEXT_PUBLIC_PROJECT_ID` - Your Reown AppKit Project ID from [cloud.reown.com](https://cloud.reown.com)
-
-Optional:
-
-- `NEXT_PUBLIC_CHAIN_ID` - Default chain ID (default: 1 for Ethereum Mainnet)
-- `NEXT_PUBLIC_RPC_URL` - Custom RPC URL for blockchain interactions
+**Smart Contracts (contracts/.env):**
+- `PRIVATE_KEY` - Deployer private key (Required for deployment)
+- `SEPOLIA_RPC_URL` - Sepolia testnet RPC URL
+- `MAINNET_RPC_URL` - Mainnet RPC URL
+- `ETHERSCAN_API_KEY` - Etherscan API key for contract verification
+- See [contracts/README.md](contracts/README.md) for full configuration
 
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js 16](https://nextjs.org/) - React framework with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) - Utility-first CSS framework with dark mode
-- **Web3**:
+- **Web3**: 
   - [wagmi](https://wagmi.sh/) - React Hooks for Ethereum
   - [viem](https://viem.sh/) - TypeScript Ethereum library
   - [Reown AppKit](https://reown.com/appkit) - Wallet connection UI (formerly WalletConnect)
   - [@tanstack/react-query](https://tanstack.com/query) - Data fetching and caching
+- **Smart Contracts**:
+  - [Solidity](https://soliditylang.org/) ^0.8.20 - Smart contract language
+  - [Hardhat](https://hardhat.org/) - Development environment for Ethereum
 - **Utilities**:
   - [date-fns](https://date-fns.org/) - Date formatting utilities
 
@@ -159,7 +168,12 @@ chilly/
 │   ├── mockData.ts            # Mock data for development
 │   └── exportUtils.ts         # Export utilities (JSON, CSV)
 ├── public/                     # Static assets
-└── contracts/                  # Smart contracts (to be implemented)
+└── contracts/                  # Smart contracts
+    ├── OrderTracking.sol      # Main order tracking contract
+    ├── hardhat.config.js      # Hardhat configuration
+    ├── scripts/               # Deployment scripts
+    │   └── deploy.js         # Contract deployment script
+    └── README.md              # Contract documentation
 ```
 
 ## 🤝 Contributing
