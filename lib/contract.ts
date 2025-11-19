@@ -28,9 +28,7 @@ export enum ContractOrderStatus {
 /**
  * Convert contract order status to app order status
  */
-export function contractStatusToAppStatus(
-  status: ContractOrderStatus
-): string {
+export function contractStatusToAppStatus(status: ContractOrderStatus): string {
   const statusMap: Record<ContractOrderStatus, string> = {
     [ContractOrderStatus.Pending]: "pending",
     [ContractOrderStatus.Confirmed]: "confirmed",
@@ -46,9 +44,7 @@ export function contractStatusToAppStatus(
 /**
  * Convert app order status to contract order status
  */
-export function appStatusToContractStatus(
-  status: string
-): ContractOrderStatus {
+export function appStatusToContractStatus(status: string): ContractOrderStatus {
   const statusMap: Record<string, ContractOrderStatus> = {
     pending: ContractOrderStatus.Pending,
     confirmed: ContractOrderStatus.Confirmed,
@@ -87,4 +83,3 @@ export const contractHelpers = {
    */
   getABI: () => OrderTrackingABI,
 };
-

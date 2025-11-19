@@ -20,8 +20,18 @@ async function main() {
 
   const address = await orderTracking.getAddress();
   console.log("OrderTracking deployed to:", address);
-  console.log("Platform Fee:", platformFeeBps, "bps (", platformFeeBps / 100, "%)");
-  console.log("Minimum Order Value:", hre.ethers.formatEther(minOrderValue), "ETH");
+  console.log(
+    "Platform Fee:",
+    platformFeeBps,
+    "bps (",
+    platformFeeBps / 100,
+    "%)"
+  );
+  console.log(
+    "Minimum Order Value:",
+    hre.ethers.formatEther(minOrderValue),
+    "ETH"
+  );
 
   // Verify contract on Etherscan (if on a testnet/mainnet)
   if (process.env.ETHERSCAN_API_KEY && hre.network.name !== "hardhat") {
@@ -53,4 +63,3 @@ main()
     console.error(error);
     process.exit(1);
   });
-

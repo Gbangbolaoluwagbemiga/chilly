@@ -106,11 +106,13 @@ The dashboard is the main interface for managing orders:
 ### Environment Variables
 
 **Frontend (.env.local):**
+
 - `NEXT_PUBLIC_PROJECT_ID` - Your Reown AppKit Project ID from [cloud.reown.com](https://cloud.reown.com) (Required)
 - `NEXT_PUBLIC_CHAIN_ID` - Default chain ID (Optional, default: 1 for Ethereum Mainnet)
 - `NEXT_PUBLIC_RPC_URL` - Custom RPC URL for blockchain interactions (Optional)
 
 **Smart Contracts (contracts/.env):**
+
 - `PRIVATE_KEY` - Deployer private key (Required for deployment)
 - `SEPOLIA_RPC_URL` - Sepolia testnet RPC URL
 - `MAINNET_RPC_URL` - Mainnet RPC URL
@@ -122,7 +124,7 @@ The dashboard is the main interface for managing orders:
 - **Framework**: [Next.js 16](https://nextjs.org/) - React framework with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) - Utility-first CSS framework with dark mode
-- **Web3**: 
+- **Web3**:
   - [wagmi](https://wagmi.sh/) - React Hooks for Ethereum
   - [viem](https://viem.sh/) - TypeScript Ethereum library
   - [Reown AppKit](https://reown.com/appkit) - Wallet connection UI (formerly WalletConnect)

@@ -7,19 +7,23 @@ The Chilly dApp uses a comprehensive Solidity smart contract (`OrderTracking.sol
 ## Contract Features
 
 ### 1. Order Management
+
 - Create orders with escrow payment
 - Track order status through lifecycle
 - Update order information
 - Cancel orders with automatic refunds
 
 ### 2. Payment Handling
+
 - **Escrow System**: Payments held in contract until delivery
 - **Automatic Release**: Payment released to seller on delivery
 - **Automatic Refund**: Full refund (minus platform fee) on cancellation
 - **Platform Fee**: Configurable fee collected at order creation
 
 ### 3. Status Management
+
 Order statuses follow a clear lifecycle:
+
 - `Pending` (0) - Order created, awaiting confirmation
 - `Confirmed` (1) - Order confirmed by seller
 - `Processing` (2) - Order being prepared
@@ -29,6 +33,7 @@ Order statuses follow a clear lifecycle:
 - `Disputed` (6) - Order under dispute
 
 ### 4. Security Features
+
 - Access control (only buyer/seller can update their orders)
 - Status transition validation
 - Reentrancy protection
@@ -53,11 +58,13 @@ function createOrder(
 ```
 
 **Requirements:**
+
 - Must send ETH (msg.value) equal to order price
 - Price must be >= minimum order value
 - Seller address must be valid and different from buyer
 
 **What happens:**
+
 1. Platform fee is calculated and sent to contract owner
 2. Remaining funds held in contract escrow
 3. Order struct created and stored
@@ -71,10 +78,12 @@ function confirmOrder(uint256 _orderId) external
 ```
 
 **Requirements:**
+
 - Only seller can confirm
 - Order must be in `Pending` status
 
 **What happens:**
+
 - Status changes to `Confirmed`
 - `OrderStatusUpdated` event emitted
 
@@ -88,6 +97,7 @@ function updateOrderStatus(
 ```
 
 **Requirements:**
+
 - Only buyer or seller can update
 - Status transition must be valid
 - Special handling for `Delivered` (releases payment) and `Cancelled` (refunds)
@@ -102,6 +112,7 @@ function addTrackingNumber(
 ```
 
 **Requirements:**
+
 - Only seller can add tracking
 - Order must be in `Processing` or `Shipped` status
 
@@ -115,6 +126,7 @@ function disputeOrder(
 ```
 
 **Requirements:**
+
 - Only buyer or seller can dispute
 - Order cannot be in terminal states (Delivered, Cancelled, Disputed)
 
@@ -128,10 +140,12 @@ function cancelOrder(
 ```
 
 **Requirements:**
+
 - Only buyer or seller can cancel
 - Order must be in `Pending` or `Confirmed` status
 
 **What happens:**
+
 - Status changes to `Cancelled`
 - Full refund (minus platform fee) sent to buyer
 - `OrderCancelled` event emitted
@@ -139,6 +153,7 @@ function cancelOrder(
 ## Payment Flow
 
 ### Order Creation
+
 ```
 Buyer sends: 1.0 ETH
 Platform fee: 0.01 ETH (1%) → Contract Owner
@@ -146,11 +161,13 @@ Escrow: 0.99 ETH → Contract (held)
 ```
 
 ### Order Delivery
+
 ```
 Escrow: 0.99 ETH → Seller
 ```
 
 ### Order Cancellation
+
 ```
 Escrow: 0.99 ETH → Buyer (refund)
 Platform fee: 0.01 ETH (non-refundable)
@@ -159,6 +176,7 @@ Platform fee: 0.01 ETH (non-refundable)
 ## Gas Optimization
 
 The contract is optimized for gas efficiency:
+
 - Uses `uint256` for IDs (cheaper than strings)
 - Stores order data in single struct
 - Uses events for off-chain indexing
@@ -180,23 +198,29 @@ event OrderCancelled(uint256 indexed orderId, address cancelledBy, ...);
 ## Admin Functions
 
 ### Platform Fee Management
+
 ```solidity
 function setPlatformFee(uint256 _newFee) external onlyOwner
 ```
+
 - Maximum fee: 10% (1000 basis points)
 - Fee collected at order creation
 
 ### Minimum Order Value
+
 ```solidity
 function setMinOrderValue(uint256 _newValue) external onlyOwner
 ```
+
 - Prevents spam orders
 - Default: 0.001 ETH
 
 ### Ownership Transfer
+
 ```solidity
 function transferOwnership(address _newOwner) external onlyOwner
 ```
+
 - Transfers contract ownership
 - New owner can update fees and settings
 
@@ -213,6 +237,7 @@ npm run deploy:sepolia  # or mainnet, polygon, arbitrum
 ### 2. Update Contract Address
 
 Update `lib/contract.ts` with deployed contract address:
+
 ```typescript
 export const CONTRACT_ADDRESSES: Record<number, Address> = {
   11155111: "0xYourDeployedContractAddress", // Sepolia
@@ -223,9 +248,9 @@ export const CONTRACT_ADDRESSES: Record<number, Address> = {
 ### 3. Use in Frontend
 
 ```typescript
-import { useWriteContract } from 'wagmi';
-import { OrderTrackingABI } from '@/lib/abis/OrderTracking';
-import { getContractAddress } from '@/lib/contract';
+import { useWriteContract } from "wagmi";
+import { OrderTrackingABI } from "@/lib/abis/OrderTracking";
+import { getContractAddress } from "@/lib/contract";
 
 const { writeContract } = useWriteContract();
 
@@ -233,18 +258,18 @@ const { writeContract } = useWriteContract();
 await writeContract({
   address: getContractAddress(chainId),
   abi: OrderTrackingABI,
-  functionName: 'createOrder',
+  functionName: "createOrder",
   args: [
     sellerAddress,
     productName,
     description,
     quantity,
-    '0x0000000000000000000000000000000000000000', // ETH
+    "0x0000000000000000000000000000000000000000", // ETH
     estimatedDelivery,
-    'sepolia',
-    '' // IPFS hash (optional)
+    "sepolia",
+    "", // IPFS hash (optional)
   ],
-  value: parseEther('0.1'), // Order price
+  value: parseEther("0.1"), // Order price
 });
 ```
 
@@ -278,10 +303,12 @@ npm test
 ## Cost Estimates
 
 **Deployment (Sepolia):**
+
 - Contract deployment: ~2,000,000 gas
 - Cost: ~0.01 ETH (at 20 gwei)
 
 **Operations (Estimated):**
+
 - Create order: ~150,000 gas
 - Update status: ~50,000 gas
 - Add tracking: ~40,000 gas
@@ -290,6 +317,7 @@ npm test
 ## Future Enhancements
 
 Potential improvements:
+
 - ERC-20 token support
 - Multi-signature dispute resolution
 - Order expiration mechanism
@@ -300,7 +328,7 @@ Potential improvements:
 ## Support
 
 For contract-related questions:
+
 - Check [contracts/README.md](../contracts/README.md)
 - Review contract code in [contracts/OrderTracking.sol](../contracts/OrderTracking.sol)
 - Open an issue on GitHub
-

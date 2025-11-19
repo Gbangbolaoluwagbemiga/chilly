@@ -9,6 +9,7 @@ This directory contains the Solidity smart contracts for the Chilly decentralize
 The main smart contract that handles all order-related operations on-chain.
 
 **Key Features:**
+
 - ✅ Order creation with escrow payment
 - ✅ Order status management (Pending → Confirmed → Processing → Shipped → Delivered)
 - ✅ Dispute resolution system
@@ -155,6 +156,7 @@ npm test
 ## 📚 Contract Addresses
 
 After deployment, update the contract addresses in:
+
 - `lib/contract.ts` - Frontend contract configuration
 
 ## 🔍 Verification
@@ -174,16 +176,17 @@ npx hardhat verify --network sepolia <CONTRACT_ADDRESS> <CONSTRUCTOR_ARGS>
 3. Use wagmi hooks to interact with the contract
 
 Example:
+
 ```typescript
-import { useWriteContract, useReadContract } from 'wagmi';
-import { OrderTrackingABI } from '@/lib/abis/OrderTracking';
-import { getContractAddress } from '@/lib/contract';
+import { useWriteContract, useReadContract } from "wagmi";
+import { OrderTrackingABI } from "@/lib/abis/OrderTracking";
+import { getContractAddress } from "@/lib/contract";
 
 // Read order
 const { data: order } = useReadContract({
   address: getContractAddress(chainId),
   abi: OrderTrackingABI,
-  functionName: 'getOrder',
+  functionName: "getOrder",
   args: [orderId],
 });
 
@@ -192,8 +195,17 @@ const { writeContract } = useWriteContract();
 writeContract({
   address: getContractAddress(chainId),
   abi: OrderTrackingABI,
-  functionName: 'createOrder',
-  args: [seller, productName, description, quantity, currency, delivery, network, metadata],
+  functionName: "createOrder",
+  args: [
+    seller,
+    productName,
+    description,
+    quantity,
+    currency,
+    delivery,
+    network,
+    metadata,
+  ],
   value: parseEther(price),
 });
 ```
@@ -209,4 +221,3 @@ writeContract({
 ## 📄 License
 
 MIT License - See LICENSE file for details
-
